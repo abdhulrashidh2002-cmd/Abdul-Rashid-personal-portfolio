@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+
+  /* 🌌 Background gradient base */
+  --color-bg-start: #0d1b2a;
+  --color-bg-mid: #111827;
+  --color-bg-end: #4c1d95;
+
+  /* 🧱 Surfaces (navbar, cards) */
+  --color-surface: rgba(15, 23, 42, 0.6);
+  --color-surface-strong: rgba(30, 41, 59, 0.7);
+
+  /* 🎯 Brand colors */
+  --color-primary: #8B5CF6;
+  --color-accent: #EC4899;
+
+  /* ✍️ Text */
+  --color-text: #F8FAFC;
+  --color-muted: #CBD5E1;
+
+  /* 🔲 Borders */
+  --color-border: rgba(139, 92, 246, 0.15);
+
+  /* ✨ Glow effects */
+  --color-glow: rgba(139, 92, 246, 0.35);
+}
+
+body{
+   background: linear-gradient(
+    135deg,
+    var(--color-bg-start),
+    var(--color-bg-mid),
+    var(--color-bg-end)
+  );
+
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+html{
+  scroll-behavior: smooth;
+}
