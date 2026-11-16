@@ -122,8 +122,6 @@ export const projects:ProjectProp[]=[
         {name:"PHP",icon:FaPhp},
         {name:"JS",icon:SiJavascript},
         {name:"MySQL",icon:SiMysql},
-        
-        
     ],
     github:"https://github.com/abdhulrashidh2002-cmd/Mondy_Cinema_WebApp",
   

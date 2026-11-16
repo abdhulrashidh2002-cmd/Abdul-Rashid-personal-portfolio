@@ -42,7 +42,7 @@ export default function Navbar() {
         duration:0.8,
         ease:"easeOut"
     }}
-    className="sticky  top-0 m-4 mt-5 z-50  backdrop-blur-md border-b border-border text-text">
+    className="sticky top-2 md:top-5  mx-6 bg-[#0f172a] rounded-full z-50  backdrop-blur-md border-b border-border text-text">
       
       <div id="Home" className=" flex items-center justify-between px-6 py-4">
 
@@ -60,7 +60,9 @@ export default function Navbar() {
               : "hover:text-primary"
           }`}
           >
-            <a href="#Hero">
+            <a href="#Hero"
+            className="bg-white/5 px-7  py-3 rounded-full "
+            >
               Home
             </a>
           </li>
@@ -69,7 +71,8 @@ export default function Navbar() {
               ? "text-accent font-semibold"
               : "hover:text-primary"
           }`}>
-            <a href="#about">
+            <a href="#about"
+               className="bg-white/5 px-7  py-3 rounded-full ">
               About
             </a>
           </li>
@@ -78,7 +81,8 @@ export default function Navbar() {
               ? "text-accent font-semibold"
               : "hover:text-primary"
           }`}>
-            <a href="#skills">
+            <a href="#skills"
+               className="bg-white/5 px-7  py-3 rounded-full ">
               Skills
             </a>
           </li>
@@ -87,7 +91,8 @@ export default function Navbar() {
               ? "text-accent font-semibold"
               : "hover:text-primary"
           }`}>
-            <a href="#projects">
+            <a href="#projects"
+               className="bg-white/5 px-7  py-3 rounded-full ">
               Projects
             </a>
           </li>
@@ -96,7 +101,8 @@ export default function Navbar() {
               ? "text-accent font-semibold"
               : "hover:text-primary text-muted"
           }`}>
-            <a href="#contact">
+            <a href="#contact"
+               className="bg-white/5 px-7  py-3 rounded-full ">
               Contact
             </a>
           </li>
@@ -106,6 +112,7 @@ export default function Navbar() {
         <button 
         onClick={()=>window.open("/Resume.pdf","_blank")}
         className="hidden md:block bg-gradient-to-r from-primary hover:cursor-pointer to-accent text-white px-4 py-2 rounded-full hover:scale-105 transition">
+
           Resume
         </button>
 

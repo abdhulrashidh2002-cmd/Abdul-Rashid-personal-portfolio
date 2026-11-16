@@ -1,176 +1,301 @@
-import { motion } from "framer-motion";
+import { useId } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import type { IconType } from "react-icons";
+
 import {
   FaReact,
   FaNodeJs,
   FaGitAlt,
   FaGithub,
   FaJava,
-  FaPhp,  
+  FaPhp,
   FaDatabase,
   FaShieldAlt,
-  FaCss3,
- 
-  
+  FaDesktop,
+  FaLayerGroup,
+  FaCode,
+  FaTools,
+  FaGraduationCap,
+  FaCubes,
 } from "react-icons/fa";
 
 import {
   SiTailwindcss,
   SiJavascript,
-
   SiMongodb,
   SiExpress,
   SiMysql,
-  SiPostman,SiNextdotjs,SiDotnet,SiFirebase,SiTypescript,SiSpringboot,SiAngular,
+  SiPostman,
+  SiNextdotjs,
+  SiDotnet,
+  SiFirebase,
+  SiTypescript,
+  SiSpringboot,
+  SiAngular,
   SiHtml5,
- 
-  SiBootstrap,
+
+  SiBootstrap, SiCss, SiSupabase,
 } from "react-icons/si";
 
 interface SkillItem {
   name: string;
-  icon: React.ReactNode;
+  icon: IconType;
+  color: string;
 }
 
-interface SkillListProps {
+interface SkillCategory {
+  title: string;
+  icon: IconType;
   skills: SkillItem[];
-}
-interface SkillProps {
-  icon: React.ReactNode;
-  name: string;
+  learning?: boolean;
 }
 
+const categories: SkillCategory[] = [
+  {
+    title: "Frontend",
+    icon: FaDesktop,
+    skills: [
+      { name: "React", icon: FaReact, color: "#61DAFB" },
+      { name: "React Native", icon: FaReact, color: "#61DAFB" },
+      { name: "Angular", icon: SiAngular, color: "#F43F5E" },
+      { name: "Next.js", icon: SiNextdotjs, color: "#F8FAFC" },
+      {
+        name: "Tailwind CSS",
+        icon: SiTailwindcss,
+        color: "#38BDF8",
+      },
+      { name: "Bootstrap", icon: SiBootstrap, color: "#A78BFA" },
+      { name: "HTML5", icon: SiHtml5, color: "#F97316" },
+      { name: "CSS3", icon: SiCss, color: "#38BDF8" },
+    ],
+  },
+  {
+    title: "Backend",
+    icon: FaLayerGroup,
+    skills: [
+      { name: "Node.js", icon: FaNodeJs, color: "#83CD29" },
+      { name: "Express.js", icon: SiExpress, color: "#F8FAFC" },
+      { name: ".NET", icon: SiDotnet, color: "#A78BFA" },
+      { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
+      { name: "Next.js", icon: SiNextdotjs, color: "#F8FAFC" },
+    ],
+  },
+  {
+    title: "Databases",
+    icon: FaDatabase,
+    skills: [
+      { name: "MongoDB", icon: SiMongodb, color: "#4DB33D" },
+      { name: "MySQL", icon: SiMysql, color: "#60A5FA" },
+      {
+        name: "MS SQL Server",
+        icon: FaDatabase,
+        color: "#FB7185",
+      },
+      {name: "Supabase", icon:SiSupabase, color: "#4DB83F" },
+    ],
+  },
+  {
+    title: "Languages",
+    icon: FaCode,
+    skills: [
+      { name: "Java", icon: FaJava, color: "#FB923C" },
+      {
+        name: "JavaScript",
+        icon: SiJavascript,
+        color: "#F7DF1E",
+      },
+      {
+        name: "TypeScript",
+        icon: SiTypescript,
+        color: "#60A5FA",
+      },
+      { name: "PHP", icon: FaPhp, color: "#A5B4FC" },
+    ],
+  },
+  {
+    title: "Tools",
+    icon: FaTools,
+    skills: [
+      { name: "Git", icon: FaGitAlt, color: "#F05032" },
+      { name: "GitHub", icon: FaGithub, color: "#F8FAFC" },
+      { name: "Postman", icon: SiPostman, color: "#FF6C37" },
+    ],
+  },
+  {
+    title: "Currently learning",
+    icon: FaGraduationCap,
+    learning: true,
+    skills: [
+      {
+        name: "Spring Boot",
+        icon: SiSpringboot,
+        color: "#6DB33F",
+      },
+      {
+        name: "Angular (Mastering)",
+        icon: SiAngular,
+        color: "#F43F5E",
+      },
+      {
+        name: "Microservices",
+        icon: FaCubes,
+        color: "#A78BFA",
+      },
+      {
+        name: "Spring Security",
+        icon: FaShieldAlt,
+        color: "#A3E635",
+      },
+    ],
+  },
+];
+
+function SkillBadge({ skill }: { skill: SkillItem }) {
+  const Icon = skill.icon;
+
+  return (
+      <li className="flex max-w-full items-center gap-2.5 rounded-full border border-white/5 bg-white/[0.06] px-3.5 py-2.5 transition-colors duration-200 hover:border-violet-400/30 hover:bg-violet-400/10">
+        <Icon
+            aria-hidden="true"
+            className="h-5 w-5 shrink-0 sm:h-6 sm:w-6"
+            style={{ color: skill.color }}
+        />
+
+        <span className="min-w-0 text-sm font-medium leading-snug text-slate-200">
+        {skill.name}
+      </span>
+      </li>
+  );
+}
 
 export default function Skills() {
-  const frontendSkills = [
-  { name: "React", icon: <FaReact className="text-[#61DAFB]" /> },
-  { name: "Angular", icon: <SiAngular className="text-[#DD0031]" /> },
-  { name: "Next.js", icon: <SiNextdotjs className="text-white" /> },
-  { name: "Tailwind CSS", icon: <SiTailwindcss className="text-[#06B6D4]" /> },
-  { name: "Bootstrap", icon: <SiBootstrap className="text-[#7952B3]" /> },
-  { name: "HTML5", icon: <SiHtml5 className="text-[#E34F26]" /> },
-  { name: "CSS3", icon: <FaCss3 className="text-[#1572B6]" /> },
-];
-const backendSkills = [
-  { name: "Node.js", icon: <FaNodeJs className="text-[#5FA04E]" /> },
-  { name: "Express.js", icon: <SiExpress className="text-white" /> },
-  { name: ".NET", icon: <SiDotnet className="text-[#512BD4]" /> },
-  { name: "Firebase", icon: <SiFirebase className="text-[#FFCA28]" /> },
-];
-const databaseSkills = [
-  { name: "MongoDB", icon: <SiMongodb className="text-[#47A248]" /> },
-  { name: "MySQL", icon: <SiMysql className="text-[#4479A1]" /> },
-  { name: "MS SQL Server", icon: <FaDatabase className="text-[#CC2927]" /> },
-];
-const toolSkills = [
-  { name: "Git", icon: <FaGitAlt className="text-[#F05032]" /> },
-  { name: "GitHub", icon: <FaGithub className="text-[#181717]" /> },
-  { name: "Postman", icon: <SiPostman className="text-[#FF6C37]" /> },
-];
-const languageSkills = [
-  { name: "Java", icon: <FaJava className="text-[#007396]" /> },
-  { name: "JavaScript", icon: <SiJavascript className="text-[#F7DF1E]" /> },
-  { name: "TypeScript", icon: <SiTypescript className="text-[#3178C6]" /> },
-  { name: "PHP", icon: <FaPhp className="text-[#777BB4]" /> },
-];
-const learningSkills = [
-  { name: "Spring Boot", icon: <SiSpringboot className="text-[#6DB33F]" /> },
-  { name: "Angular (Mastering)", icon: <SiAngular className="text-[#DD0031]" /> },
-  { name: "Microservices", icon: <SiSpringboot className="text-[#6DB33F]" /> },
-  { name: "Spring Security", icon: <FaShieldAlt className="text-yellow-500" /> },
-];
+  const headingId = useId();
+  const reduceMotion = useReducedMotion();
 
-function SkillList({ skills }:SkillListProps) {
   return (
-    <div className="flex flex-wrap gap-4">
-      {skills.map((skill) => (
-        <Skill key={skill.name} icon={skill.icon} name={skill.name} />
-      ))}
-    </div>
-  );
-}
-  return (
-    <motion.section
-      id="skills"
-      className="py-16 px-6 min-h-screen scroll-mt-85 md:scroll-mt-25"
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-    >
-      {/* Title */}
-      <h2 className="text-3xl font-bold text-center mb-2">
-        Tech Skills
-      </h2>
-      <p className="text-center text-gray-500 mb-10">
-        Technologies I work with
-      </p>
+      <section
+          id="skills"
+          aria-labelledby={headingId}
+          className="relative isolate scroll-mt-24 overflow-hidden bg-[#0F172A] px-6 py-20 text-[#F8FAFC] sm:px-10 sm:py-24 lg:px-16 lg:py-28"
+      >
+        {/* Background lighting */}
+        <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[480px] w-[480px] rounded-full bg-[#8B5CF6]/15 blur-[120px]"
+        />
 
-      {/* Grid Container */}
-      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-44 -left-40 -z-10 h-[460px] w-[460px] rounded-full bg-[#8B5CF6]/15 blur-[120px]"
+        />
 
-        {/* Frontend */}
-        <div className="p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Frontend</h3>
-          <div className="flex flex-wrap gap-4">
-            <SkillList skills={frontendSkills} />
+        {/* Subtle background grid */}
+        <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025]"
+            style={{
+              backgroundImage:
+                  "linear-gradient(#C4B5FD 1px, transparent 1px), linear-gradient(90deg, #C4B5FD 1px, transparent 1px)",
+              backgroundSize: "64px 64px",
+              maskImage:
+                  "linear-gradient(to bottom, black, transparent 85%)",
+            }}
+        />
+
+        <div className="mx-auto max-w-7xl">
+          {/* Section heading */}
+          <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.5,
+                ease: "easeOut",
+              }}
+              className="mb-10 sm:mb-12"
+          >
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.25em] text-[#C084FC] sm:text-sm">
+              02 / My skills
+            </p>
+
+            <h2
+                id={headingId}
+                className="max-w-4xl text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl"
+            >
+              Technologies{" "}
+              <span className="bg-gradient-to-r from-[#A855F7] via-[#C084FC] to-[#EC4899] bg-clip-text text-transparent">
+              I work with
+            </span>
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+              A toolkit for building modern web and mobile applications.
+            </p>
+          </motion.div>
+
+          {/* Category cards */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+            {categories.map((category, index) => {
+              const CategoryIcon = category.icon;
+
+              return (
+                  <motion.article
+                      key={category.title}
+                      initial={
+                        reduceMotion ? false : { opacity: 0, y: 24 }
+                      }
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.15 }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.45,
+                        delay: reduceMotion ? 0 : (index % 3) * 0.07,
+                        ease: "easeOut",
+                      }}
+                      className={`relative h-full min-w-0 overflow-hidden rounded-3xl border bg-gradient-to-br from-[#192137]/90 to-[#101729]/95 p-6 transition-colors duration-300 sm:p-7 ${
+                          category.learning
+                              ? "border-[#EC4899]/65 hover:border-[#F472B6]"
+                              : "border-[#A78BFA]/25 hover:border-[#A78BFA]/60"
+                      }`}
+                  >
+                    {/* Learning card accent */}
+                    {category.learning && (
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-[#EC4899]/10 blur-3xl"
+                        />
+                    )}
+
+                    <div className="relative mb-7 flex items-center gap-3">
+                      <CategoryIcon
+                          aria-hidden="true"
+                          className="h-7 w-7 shrink-0 text-[#A78BFA]"
+                      />
+
+                      <h3 className="min-w-0 text-xl font-bold leading-snug tracking-tight text-slate-100 sm:text-2xl">
+                        {category.title}
+                      </h3>
+
+                      {category.learning && (
+                          <span
+                              aria-hidden="true"
+                              className="ml-auto h-2 w-2 shrink-0 rounded-full bg-[#EC4899] shadow-[0_0_12px_rgba(236,72,153,0.5)]"
+                          />
+                      )}
+                    </div>
+
+                    <ul
+                        aria-label={`${category.title} technologies`}
+                        className="relative flex flex-wrap gap-2.5"
+                    >
+                      {category.skills.map((skill) => (
+                          <SkillBadge key={skill.name} skill={skill} />
+                      ))}
+                    </ul>
+                  </motion.article>
+              );
+            })}
           </div>
         </div>
-
-        {/* Backend */}
-        <div className="p-6 rounded-xl shadow-md ">
-          <h3 className="text-xl font-semibold mb-4">Backend</h3>
-          <div className="flex flex-wrap gap-4 ">
-           <SkillList skills={backendSkills}/>
-          </div>
-        </div>
-
-        {/* Database */}
-        <div className="p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Database</h3>
-          <div className="flex flex-wrap gap-4">
-            <SkillList skills={databaseSkills}/>
-          </div>
-        </div>
-
-        {/* Tools */}
-        <div className="p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Tools</h3>
-          <div className="flex flex-wrap gap-4">
-            <SkillList skills={toolSkills}/>
-          </div>
-        </div>
-
-        {/* Programming languages*/}
-        <div className="p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Programing languages</h3>
-          <div className="flex flex-wrap gap-4">
-            <SkillList skills={languageSkills}/>
-          </div>
-        </div>
-
-
-        {/* Learning... */}
-        <div className="p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Currently learning</h3>
-          <div className="flex flex-wrap gap-4">
-           <SkillList skills={learningSkills}/>
-          </div>
-        </div>
-
-      </div>
-    </motion.section>
-  );
-}
-
-/* Skill Item Component */
-function Skill({ icon, name}:SkillProps) {
-  return (
-    <div className="flex items-center gap-2 px-3 py-2 rounded-lg border hover:scale-105 transition duration-200 cursor-default">
-      <span className="text-xl">{icon}</span>
-      
-       <span className="text-sm text-muted group-hover:opacity-100 transition">
-        {name}
-      </span>
-    </div>
+      </section>
   );
 }
